@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/Book.css"
 
-function Book({ book, onDelete}) {
+function Book({ book, onDelete, onEdit}) {
 
     return (
         <div className="book-container">
@@ -12,6 +12,9 @@ function Book({ book, onDelete}) {
             <p className="book-genre">{book.genre}</p>
             <button className="delete-button" onClick={() => onDelete(book.id)}>
                 Delete
+            </button>
+            <button className="update-button" onClick={() => onEdit(book)}>
+                Update
             </button>
         </div>
     );

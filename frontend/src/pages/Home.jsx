@@ -10,6 +10,7 @@ function Home() {
     const [publisher, setPublisher] = useState("");
     const [pub_year, setPubYear] = useState("");
     const [genre, setGenre] = useState("");
+    const [currentBookId, setCurrentBookId] = useState(null);
 
     useEffect(() => {
         getBooks();
@@ -33,6 +34,7 @@ function Home() {
                 if (res.status === 204) alert("Book deleted!");
                 else alert("Failed to delete book.");
                 getBooks();
+                resetForm();
             })
             .catch((error) => alert(error));
     };
@@ -45,20 +47,63 @@ function Home() {
                 if (res.status === 201) alert("Book created!");
                 else alert("Failed to make book.");
                 getBooks();
+                resetForm();
             })
             .catch((err) => alert(err));
     };
+
+    const updateBook = (id, updatedBook) => {
+    api
+        .put(`/api/book/${id}/`, updatedBook)
+        .then((res) => {
+            if (res.status === 200) alert("Book updated!");
+            else alert("Failed to update book.");
+            getBooks();
+            resetForm();
+        })
+        .catch((error) => alert(error));
+};
+
+const handleUpdate = (book) => {
+        setISBN(book.isbn);
+        setTitle(book.title);
+        setPublisher(book.publisher);
+        setPubYear(book.pub_year);
+        setGenre(book.genre);
+        setCurrentBookId(book.id);
+};
+
+const handleBook = (e) => {
+    e.preventDefault();
+    const updatedBook = { isbn, title, publisher, pub_year, genre };
+
+        if (currentBookId) {
+            updateBook(currentBookId, updatedBook); 
+        } else {
+            createBook(e);
+        }
+};
+
+const resetForm = () => {
+    setISBN("");
+    setTitle("");
+    setPublisher("");
+    setPubYear("");
+    setGenre("");
+    setCurrentBookId(null);
+}
+
 
     return (
         <div>
             <div>
                 <h2>Book</h2>
                 {books.map((book) => (
-                    <Book book={book} onDelete={deleteBook}key={book.id} />
+                    <Book book={book} onDelete={deleteBook} key={book.id} onEdit={handleUpdate} />
                 ))}
             </div>
-            <h2>Create a Book</h2>
-            <form onSubmit={createBook}>
+            <h2>{ currentBookId ? "Update Book" : "Create a Book"}</h2>
+            <form onSubmit={handleBook}>
                 <label htmlFor="isbn">ISBN:</label>
                 <br />
                 <input
@@ -113,7 +158,7 @@ function Home() {
                     onChange={(e) => setGenre(e.target.value)}
                 ></textarea>
                 <br />
-                <input type="submit" value="Submit"></input>
+                <input type="submit" value={currentBookId ? "Update" : "Submit"}></input>
             </form>
         </div>
     );
