@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Home from "./pages/Home"
+import Checkout from "./pages/Checkout"
+import MemberLoans from "./pages/MemberLoans"
+import ActiveLoans from "./pages/ActiveLoans"
+import FineReport from "./pages/FineReport"
 import Main from "./pages/Member"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -35,6 +39,42 @@ function App() {
           element={
             <ProtectedRoute>
               <Main />
+              
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Checkout />
+              
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/report"
+          element={
+            <ProtectedRoute>
+              <FineReport />
+              
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute>
+              <MemberLoans />
+              
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/loans"
+          element={
+            <ProtectedRoute>
+              <ActiveLoans />
               
             </ProtectedRoute>
           }
