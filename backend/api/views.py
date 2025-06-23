@@ -6,6 +6,24 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Member, Book, BookCopy, Loan, Fine
 
 # Create your views here.
+class MemberListCreate(generics.ListCreateAPIView):
+    serializer_class = MemberSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Member.objects.all()
+
+class MemberDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MemberSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Member.objects.all()
+
+    def perform_destroy(self, instance):
+        instance.delete() 
+
+
 class BookListCreate(generics.ListCreateAPIView):
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
