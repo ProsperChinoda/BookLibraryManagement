@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import Book from "../components/Book"
 import "../styles/Home.css"
+import { Link } from "react-router-dom"
 
 function Home() {
     const [books, setBooks] = useState([]);
@@ -96,6 +97,25 @@ const resetForm = () => {
 
     return (
         <div>
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/main"> Member </Link>
+                    </li>
+                    <li>
+                        <Link to="/checkout"> Checkout </Link>
+                    </li>
+                    <li>
+                        <Link to="/report"> Report </Link>
+                    </li>
+                    <li>
+                        <Link to="/history"> History </Link>
+                    </li>
+                    <li>
+                        <Link to="/loans"> Active Loans </Link>
+                    </li>
+                </ul>
+            </nav>
             <div>
                 <h2>Book</h2>
                 {books.map((book) => (
